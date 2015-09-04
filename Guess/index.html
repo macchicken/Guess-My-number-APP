@@ -23,16 +23,70 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World!</title>
+        <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/paper.css">
+		<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+		<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="js/socket.io-1.3.6.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/sweetalert.min.js"></script>
     </head>
     <body>
         <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
+            <div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="text-center">Guess My Number</h3>
+				</div>
+			</div>
+			<div class="row" id="newUserContainer">
+				<div class="col-md-4 col-md-offset-4">
+					<div class="form">
+						<div class="form-group">
+							<input type="text" id="n" class="form-control" autocomplete="off" placeHolder="Your nickname" onkeydown="if (event.keyCode == 13) app.enter();" maxlength="10"/>
+						</div>
+						<div class="form-group">
+							<input type="text" id="r" class="form-control" autocomplete="off" placeHolder="Room number" onkeydown="if (event.keyCode == 13) app.enter();" maxlength="10"/>
+						</div>
+						<div class="form-group text-center">
+							<button id="enter" class="btn btn-default" onclick="app.enter()">enter</button>
+							<!--<a id="newRoom" href="javascript:;">Create New Room</a>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" id="battleField" style="display:none;">
+				<div class="col-md-4 col-md-offset-2" style="height:300px;" id="outter-container">
+					<div class="form-inline" id="inner-contaier">
+						<div class="form-group">
+							<input type="text" id="number" class="form-control" autocomplete="off" onkeydown="if (event.keyCode == 13) app.confirmReady();" placeholder="Enter your number here (each digit must be different)" maxlength="4"/><a href="javascript:;" id="ready-button" class="btn btn-fill btn-info" onclick="app.confirmReady()">Ready</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-md-offset-2" id="guesses-container" style="display:none;">
+					<ul id="guesses" class="list-unstyled" style="overflow-y: scroll;height: 400px; width:100%; max-height: 400px;"></ul>
+					<div class="form-inline">
+						<div class="form-group center-block">
+							<input type="text" id="g" class="form-control" autocomplete="off" onkeydown="if (event.keyCode == 13) app.guess();" placeholder="New guess (each digit must be different)" maxlength="4"/>
+							<button type="button" onclick="app.guess()" class="btn waves-effect deep-orange accent-3">Guess</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<ul id="messages" class="list-unstyled" style="overflow-y: scroll;height: 400px; width:100%; max-height: 400px;"></ul>
+					<div class="form-inline">
+						<div class="form-group">
+							<input type="text" id="m" class="form-control" autocomplete="off" onkeydown="if (event.keyCode == 13) app.sendMessage();" placeholder="New message" maxlength="200"/>
+							<button type="button" onclick="app.sendMessage()" class="btn btn-fill btn-success">Send</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
